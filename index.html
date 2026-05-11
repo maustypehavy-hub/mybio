@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RXKSYAN // ULTIMATE TERMINAL</title>
+    <title>RXKSYAN // ULTIMATE WOT HUD</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Jura:wght@700&family=Space+Mono&family=Permanent+Marker&family=VT323&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Jura:wght@700&family=Space+Mono&family=Permanent+Marker&display=swap');
         
         :root {
             --bg-wall: #020202; 
@@ -128,6 +128,7 @@
 
         #screen-off { position: absolute; inset: 0; background: #030403; z-index: 999999; transition: opacity 0.2s; }
 
+        /* ТЕМНЫЙ ГЛИТЧ ПРИ ЗАПУСКЕ */
         .crt-turn-on { animation: crtFlickerDark 0.8s ease-out forwards; }
         @keyframes crtFlickerDark {
             0%   { opacity: 0; filter: brightness(1); }
@@ -138,6 +139,7 @@
             100% { opacity: 0; display: none; }
         }
 
+        /* Выпуклое стекло и сканлайны */
         #crt-overlay {
             position: absolute; inset: 0; z-index: 99998; pointer-events: none;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
@@ -149,7 +151,7 @@
         }
 
         /* ========================================= */
-        /* СЦЕНА 2: ВХОД В СИСТЕМУ (СИНХРОННЫЙ ГЛИТЧ)*/
+        /* СЦЕНА 2: ВХОД В СИСТЕМУ                   */
         /* ========================================= */
         #login-os {
             position: absolute; inset: 0; background: #050a05; color: var(--hud-main);
@@ -172,7 +174,6 @@
             caret-color: var(--hud-main); 
         }
 
-        /* Кнопка запуска после пароля */
         #start-hint {
             display: none; margin-top: 40px; font-size: 18px; color: var(--hud-alert);
             text-align: center; font-weight: bold; cursor: pointer;
@@ -185,14 +186,14 @@
         /* ========================================= */
         #game-content { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 1s; }
 
-        /* ВЗЛОМ ШЛЮЗА (ШРИФТ VT323 - ИСТИННЫЙ КОНСОЛЬНЫЙ) */
+        /* ВЗЛОМ ШЛЮЗА (ТВОЙ ТЕКСТ И ТВОЯ АНИМАЦИЯ) */
         #game-content.lvl-8 { background: #000 !important; }
         #game-content.lvl-8::before {
             content: "SYSTEM FAILURE"; 
             position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);
-            color: red; opacity: 0.9; font-size: 75px; z-index: 9990; 
-            font-family: 'VT323', monospace; font-weight: bold; pointer-events: none;
-            animation: glitch 1s infinite; text-shadow: 3px 0 #fff, -3px 0 #ff0000;
+            color: red; opacity: 0.8; font-size: 60px; z-index: 9990; 
+            font-family: 'Space Mono', monospace; font-weight: bold; pointer-events: none;
+            animation: glitch 1s infinite; text-shadow: 2px 0 #fff, -2px 0 #ff0000;
         }
         #game-content.lvl-8 #scene, #game-content.lvl-8 #crosshair-center, #game-content.lvl-8 header { opacity: 0; pointer-events: none; }
         #game-content.lvl-8 .terminal-box { border-left: 3px solid #ff0000 !important; background: rgba(20, 0, 0, 0.95) !important; box-shadow: 0 0 50px rgba(255,0,0,0.3) !important; }
@@ -215,14 +216,30 @@
         #scene { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; transform-style: preserve-3d; pointer-events: none; transition: opacity 0.5s; }
         #camera { position: absolute; width: 0; height: 0; transform-style: preserve-3d; will-change: transform; }
 
-        /* ОТДАЛЕНИЕ КАРТОЧЕК: Аккуратные, далекие иконки (Радиус 3500px) */
-        .target-node { position: absolute; transform-style: preserve-3d; width: 140px; height: 140px; left: -70px; top: -70px; display: flex; flex-direction: column; justify-content: center; align-items: center; backface-visibility: hidden; }
+        /* ========================================= */
+        /* КАРТОЧКИ: РАДИУС 800, НОРМАЛЬНЫЕ РАЗМЕРЫ  */
+        /* ========================================= */
+        .target-node { 
+            position: absolute; transform-style: preserve-3d; 
+            width: 200px; height: 200px; left: -100px; top: -100px; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; backface-visibility: hidden; 
+        }
         
-        .icon-render { width: 130px; height: 130px; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s; filter: drop-shadow(0 0 10px rgba(51, 255, 51, 0.15)); }
-        .holo-title { position: absolute; bottom: -30px; font-family: 'Jura', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 4px; color: var(--hud-dim); text-align: center; opacity: 0.3; transition: 0.3s; width: 300px; text-shadow: 0 0 5px #000; }
+        .icon-render { 
+            width: 160px; height: 160px; /* Аккуратный размер */
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s; 
+            filter: drop-shadow(0 0 10px rgba(51, 255, 51, 0.15)); 
+        }
+        
+        .holo-title { 
+            position: absolute; bottom: -30px; 
+            font-family: 'Jura', sans-serif; font-weight: 700; font-size: 16px; 
+            letter-spacing: 4px; color: var(--hud-dim); text-align: center; 
+            opacity: 0.3; transition: 0.3s; width: 400px; text-shadow: 0 0 5px #000; 
+        }
 
-        .target-node.locked .icon-render { transform: scale(1.15) translateZ(80px); filter: drop-shadow(0 0 25px rgba(51, 255, 51, 0.8)); }
-        .target-node.locked .holo-title { opacity: 1; bottom: -40px; color: var(--hud-alert); text-shadow: 0 0 15px var(--hud-alert); }
+        .target-node.locked .icon-render { transform: scale(1.2) translateZ(80px); filter: drop-shadow(0 0 25px rgba(51, 255, 51, 0.8)); }
+        .target-node.locked .holo-title { opacity: 1; bottom: -45px; color: var(--hud-alert); text-shadow: 0 0 15px var(--hud-alert); }
 
         /* ========================================= */
         /* ПРИЦЕЛ (ИДЕАЛЬНО ОДИНАКОВЫЙ ДЛЯ ОБОИХ РЕЖИМОВ) */
@@ -250,7 +267,7 @@
             text-shadow: 1px 1px 0 #000, 0 0 5px var(--hud-main); white-space: nowrap; 
         }
 
-        /* КРАСНЫЙ ПРИЦЕЛ (МЕНЯЕТСЯ ТОЛЬКО ЦВЕТ!) */
+        /* КРАСНЫЙ ПРИЦЕЛ */
         #game-content.target-locked #aim-marker { background: var(--hud-alert); filter: drop-shadow(0 0 5px #000) drop-shadow(0 0 10px var(--hud-alert)); }
         #game-content.target-locked #aim-circle { border-color: var(--hud-alert); opacity: 0.9; }
         #game-content.target-locked .aim-tick { background: var(--hud-alert); }
@@ -259,7 +276,7 @@
         /* HUD Интерфейс */
         #hud-ui { position: absolute; inset: 20px; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; z-index: 50; }
         header { font-family: 'Jura', sans-serif; display: flex; justify-content: space-between; font-size: 14px; letter-spacing: 2px; color: var(--hud-main); text-shadow: 0 0 5px rgba(51,255,51,0.5); }
-        .terminal-box { align-self: center; width: 100%; max-width: 600px; background: rgba(5, 10, 5, 0.9); border-left: 3px solid var(--hud-main); padding: 15px; min-height: 100px; box-shadow: 0 0 30px rgba(0,0,0,0.9); transition: all 0.5s; }
+        .terminal-box { align-self: center; width: 100%; max-width: 650px; background: rgba(5, 10, 5, 0.9); border-left: 3px solid var(--hud-main); padding: 15px; min-height: 100px; box-shadow: 0 0 30px rgba(0,0,0,0.9); transition: all 0.5s; }
         #terminal-text { font-size: 12px; line-height: 1.6; color: var(--hud-main); white-space: pre-wrap; transition: color 0.5s, text-shadow 0.5s; }
 
         @keyframes radiowave { 0% { opacity: 0.8; r: 10; } 100% { opacity: 0; r: 50; } }
@@ -271,7 +288,6 @@
 </head>
 <body>
 
-    <!-- SVG Фильтр пластика -->
     <svg style="width:0; height:0; position:absolute;" aria-hidden="true" focusable="false">
       <filter id="plastic-noise">
         <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/>
@@ -281,26 +297,22 @@
       </filter>
     </svg>
 
-    <!-- СЦЕНА 1: КОМНАТА И ПОЛКА -->
     <div id="room">
         <div id="shelf"></div>
         
-        <!-- МОНИТОР -->
         <div id="monitor-chassis">
             <div class="vents"><div class="vent"></div><div class="vent"></div><div class="vent"></div><div class="vent"></div><div class="vent"></div></div>
             
             <div class="sticky-note">
-                <b>COMMANDER:</b><br><br>
+                <b>rxksyan:</b><br><br>
                 PWD:<br>RX_01
             </div>
 
-            <!-- ЭКРАН -->
             <div id="monitor-bezel">
                 <div id="crt-screen">
                     <div id="screen-off"></div>
                     <div id="crt-overlay"></div>
 
-                    <!-- ОС: ВХОД (СИНХРОННЫЙ ГЛИТЧ) -->
                     <div id="login-os" class="sync-boot">
                         <p>VOID OS v1.0.4</p>
                         <p>BOOT SEQUENCE INITIALIZED...</p>
@@ -313,16 +325,13 @@
                         </div>
                         <p id="login-error" style="color: var(--hud-alert); display: none; margin-top: 10px;">> ACCESS DENIED.</p>
                         
-                        <!-- КНОПКА ЗАПУСКА ДЛЯ БЛОКИРОВКИ КУРСОРА -->
                         <div id="start-hint">[ КЛИКНИТЕ ДЛЯ ЗАПУСКА РАДАРА ]</div>
                     </div>
 
-                    <!-- ИГРА -->
                     <div id="game-content">
                         <div class="vignette"></div>
                         <div id="muzzle-flash"></div>
 
-                        <!-- ПРИЦЕЛ -->
                         <div id="crosshair-center">
                             <div id="aim-circle"></div>
                             <div id="aim-marker"></div>
@@ -342,20 +351,20 @@
                                             <rect x="15" y="135" width="40" height="35" fill="#050505" stroke="#3f3" stroke-width="1"/><rect x="145" y="135" width="40" height="35" fill="#050505" stroke="#3f3" stroke-width="1"/><path d="M15 140 H55 M15 148 H55 M15 156 H55 M15 164 H55" stroke="#3f3" stroke-width="1"/><path d="M145 140 H185 M145 148 H185 M145 156 H185 M145 164 H185" stroke="#3f3" stroke-width="1"/><polygon points="10,135 45,135 45,85 10,90" fill="url(#arD)" stroke="#3f3" stroke-width="0.5"/><polygon points="10,135 45,135 45,160 10,160" fill="url(#arD)" stroke="#3f3" stroke-width="0.5"/><polygon points="190,135 155,135 155,85 190,90" fill="url(#arD)" stroke="#3f3" stroke-width="0.5"/><polygon points="190,135 155,135 155,160 190,160" fill="url(#arD)" stroke="#3f3" stroke-width="0.5"/><polygon points="45,160 155,160 155,120 45,120" fill="url(#arD)" stroke="#3f3" stroke-width="1"/><line x1="45" y1="120" x2="155" y2="120" stroke="#3f3" stroke-width="2"/><polygon points="45,120 155,120 135,85 65,85" fill="url(#arL)" stroke="#3f3" stroke-width="1"/><polygon points="45,120 45,85 65,85" fill="url(#arD)" stroke="#3f3" stroke-width="0.5"/><polygon points="155,120 155,85 135,85" fill="url(#arD)" stroke="#3f3" stroke-width="0.5"/><rect x="70" y="95" width="20" height="6" fill="#000" stroke="#3f3" stroke-width="1"/><circle cx="125" cy="100" r="4" fill="#000" stroke="#3f3" stroke-width="1"/><polygon points="65,85 135,85 145,40 55,40" fill="url(#arL)" stroke="#3f3" stroke-width="1"/><polygon points="45,85 65,85 55,40 35,40" fill="url(#arD)" stroke="#3f3" stroke-width="1"/><polygon points="155,85 135,85 145,40 165,40" fill="url(#arD)" stroke="#3f3" stroke-width="1"/><path d="M85 40 C85 30, 115 30, 115 40" fill="#111" stroke="#3f3" stroke-width="1"/><rect x="95" y="25" width="10" height="15" fill="#000" stroke="#3f3" stroke-width="0.5"/><rect x="80" y="50" width="40" height="25" rx="5" fill="url(#arD)" stroke="#3f3" stroke-width="1.5"/><circle cx="100" cy="62" r="10" fill="#000" stroke="#3f3" stroke-width="2"/><circle cx="100" cy="62" r="4" fill="#3f3"/><line x1="0" y1="100" x2="200" y2="100" stroke="#3f3" stroke-width="0.5" stroke-dasharray="2 4"/><line x1="100" y1="0" x2="100" y2="200" stroke="#3f3" stroke-width="0.5" stroke-dasharray="2 4"/>
                                         </svg>
                                     </div>
-                                    <div class="holo-title">E-100 (ТЯЖЕЛЫЙ ТАНК)</div>
+                                    <div class="holo-title">Taschenratte 10k DMG</div>
                                 </div>
 
-                                <!-- 2: ОТМЕТКИ -->
+                                <!-- 2: Hacker -->
                                 <div class="target-node" data-id="ach" data-angle="90">
                                     <div class="icon-render">
                                         <svg viewBox="0 0 100 100">
                                             <defs><linearGradient id="barrel" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#050505"/><stop offset="50%" stop-color="#2a3025"/><stop offset="100%" stop-color="#050505"/></linearGradient></defs>
                                             <rect x="40" y="5" width="20" height="90" fill="url(#barrel)" stroke="#3f3" stroke-width="1"/><rect x="37" y="5" width="26" height="15" fill="#111" stroke="#3f3" stroke-width="0.5"/><rect x="35" y="10" width="30" height="5" fill="#000"/>
-                                            <rect x="40" y="35" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/><rect x="40" y="39" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/><rect x="40" y="43" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/>
-                                            <rect x="40" y="55" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/><rect x="40" y="59" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/><rect x="40" y="63" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/>
+                                            <rect class="mark-stripe" x="40" y="35" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/><rect class="mark-stripe" style="animation-delay: 0.2s;" x="40" y="39" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/><rect class="mark-stripe" style="animation-delay: 0.4s;" x="40" y="43" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/>
+                                            <rect class="mark-stripe" style="animation-delay: 0.6s;" x="40" y="55" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/><rect class="mark-stripe" style="animation-delay: 0.8s;" x="40" y="59" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/><rect class="mark-stripe" style="animation-delay: 1s;" x="40" y="63" width="20" height="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)"/>
                                         </svg>
                                     </div>
-                                    <div class="holo-title">2 ОТМЕТКИ НА СТВОЛЕ</div>
+                                    <div class="holo-title">Hacker 10k DMG</div>
                                 </div>
 
                                 <!-- 3: ШЛЮЗ -->
@@ -395,12 +404,10 @@
                                 <div id="terminal-text">СИСТЕМА АКТИВНА. НАВЕДИТЕ ЦЕНТРАЛЬНЫЙ ПРИЦЕЛ И КЛИКНИТЕ ДЛЯ СКАНИРОВАНИЯ.</div>
                             </div>
                         </div>
-
-                    </div> <!-- КОНЕЦ ИГРЫ -->
+                    </div>
                 </div>
             </div>
 
-            <!-- ФИЗИЧЕСКИЕ КНОПКИ МОНИТОРА -->
             <div class="hw-panel">
                 <div class="hw-btn"></div>
                 <div class="hw-btn"></div>
@@ -413,9 +420,9 @@
     <script>
         const db = {
             tg: "ОБНАРУЖЕН УЗЕЛ СВЯЗИ.\nID: TELEGRAM [@rxksyan]\nСТАТУС: Броня пробита. Канал связи открыт.\n\n[ СИСТЕМНОЕ УВЕДОМЛЕНИЕ: КООРДИНАТЫ СКОПИРОВАНЫ В БУФЕР ]",
-            tt: "ИДЕНТИФИКАЦИЯ: TIKTOK АРХИВЫ [rxksyan]\nСПЕЦИФИКАЦИЯ: WORLD OF TANKS.\nДАННЫЕ: Анализ брони E-100, тактика тяжелых танков.\nСТАТУС: 100% реализация ДПМ.",
-            ach: "СКАНИРОВАНИЕ ЛИЧНОГО ДЕЛА...\nОТМЕТКИ НА СТВОЛЕ: 2 Немецкие (6 полос).\nСВОДКА: Железная дисциплина в реальности. Максимальный фокус.\nСТАТУС: ЭЛИТА.",
-            sys: ">>> SYSTEM FAILURE! КРИТИЧЕСКАЯ ОШИБКА. ВЫ ЛЕЗЕТЕ ТУДА, КУДА НЕ НАДО. ДОСТУП ЗАБЛОКИРОВАН."
+            tt: "ОБНАРУЖЕНА ЗАПИСЬ БОЯ: Taschenratte.\nУРОН: 10 314 DMG.\nТИП: Сверхтяжелый танк прорыва.\nОПИСАНИЕ: Ограниченная мобильность, но непревзойденная живучесть.\nНаклонная броня делает его практически непробиваемым.\nИдеален для удержания позиций.\n\n[ КЛИК ЛКМ - СКОПИРОВАТЬ ССЫЛКУ НА ВИДЕО ]",
+            ach: "ОБНАРУЖЕНА ЗАПИСЬ БОЯ: XM69 Hacker.\nУРОН: 10 178 DMG.\nТИП: Универсальный средний танк.\nОПИСАНИЕ: Развитие M48 Patton. Нет существенных недостатков.\nОтличная мобильность, прочная броня и точное орудие.\nОгневая мощь может быть увеличена.\n\n[ КЛИК ЛКМ - СКОПИРОВАТЬ ССЫЛКУ НА ВИДЕО ]",
+            sys: "ОБНАРУЖЕНА АНОМАЛИЯ.\nТИП: СКРЫТЫЙ ПОТЕНЦИАЛ.\nБРОНЯ: НЕПРОБИВАЕМАЯ.\nВЫВОД: Границы развития не обнаружены.\n\n[ КЛИК ЛКМ - ПОПЫТКА ВЗЛОМА ШЛЮЗА ]"
         };
 
         const room = document.getElementById('room');
@@ -431,16 +438,13 @@
 
         let gameState = 'INTRO';
 
-        // 1. ЗУМ МОНИТОРА
         monitor.addEventListener('mousedown', function initiateZoom() {
             if(gameState !== 'INTRO') return;
             gameState = 'ZOOMING';
             room.classList.add('zoomed');
-            
             setTimeout(() => { pwrBtn.classList.add('glow'); }, 1500);
         });
 
-        // 2. ВКЛЮЧЕНИЕ С КНОПКИ (ТЕМНЫЙ ГЛИТЧ)
         pwrBtn.addEventListener('mousedown', (e) => {
             if(gameState !== 'ZOOMING') return;
             e.stopPropagation(); 
@@ -460,7 +464,6 @@
 
         document.addEventListener('mousedown', () => { if(gameState === 'LOGIN') pwdInput.focus(); });
 
-        // 3. ПАРОЛЬ -> КЛИК ДЛЯ БЕСКОНЕЧНОГО ВРАЩЕНИЯ (POINTER LOCK)
         pwdInput.addEventListener('keydown', (e) => {
             if(e.key === 'Enter') {
                 if(pwdInput.value.toUpperCase() === 'RX_01') {
@@ -469,7 +472,6 @@
                     pwdInput.value = 'ACCESS GRANTED...';
                     pwdInput.style.color = 'var(--hud-main)';
                     
-                    // ПОДСКАЗКА ДЛЯ POINTER LOCK
                     setTimeout(() => {
                         startHint.style.display = 'block';
                         
@@ -492,14 +494,11 @@
             }
         });
 
-        // ==============================================================
-        // 4. ТВОЯ ИГРА (БЕСКОНЕЧНЫЙ POINTER LOCK)
-        // ==============================================================
         function startGameLoop() {
             const nodes = document.querySelectorAll('.target-node');
             
-            // ВАЖНО: КАРТОЧКИ ОЧЕНЬ ДАЛЕКО (3500px)
-            const radius = 3500; 
+            // ВАЖНО: ИДЕАЛЬНЫЙ РАДИУС ДЛЯ КОМФОРТА
+            const radius = 800; 
             nodes.forEach(node => {
                 const angle = parseInt(node.getAttribute('data-angle'));
                 node.style.transform = `rotateY(${angle}deg) translateZ(${-radius}px)`;
@@ -523,14 +522,21 @@
             let wavePhase = 0;
             let typeInterval, isTyping = false;
 
-            // БЕСКОНЕЧНОЕ ВРАЩЕНИЕ МЫШЬЮ
+            let isPointerLocked = true;
+            document.addEventListener('pointerlockchange', () => {
+                isPointerLocked = (document.pointerLockElement === document.body);
+            });
+
+            // POINTER LOCK ВРАЩЕНИЕ
             window.addEventListener('mousemove', (e) => {
                 if (gameState !== 'GAME' || gameContent.classList.contains('lvl-8')) return;
-                if (document.pointerLockElement !== document.body) return;
+                if (!isPointerLocked) return;
 
-                const sens = 0.05; 
-                targetRotY -= e.movementX * sens; 
-                targetRotX += e.movementY * sens; 
+                // ЧУВСТВИТЕЛЬНОСТЬ ИДЕАЛЬНАЯ ДЛЯ РАДИУСА 800
+                let sensitivity = 0.12; 
+                
+                targetRotY -= e.movementX * sensitivity; 
+                targetRotX += e.movementY * sensitivity; 
                 
                 targetRotX = Math.max(-25, Math.min(25, targetRotX));
                 
@@ -546,8 +552,8 @@
                 currentRotY += ((targetRotY + recoilOffsetY) - currentRotY) * 0.06;
                 camera.style.transform = `rotateX(${currentRotX}deg) rotateY(${currentRotY}deg)`;
 
-                // СВЕДЕНИЕ (СУПЕР-МЕДЛЕННОЕ 0.997)
-                dispersion *= 0.997; 
+                // СВЕДЕНИЕ (ОЧЕНЬ МЕДЛЕННОЕ)
+                dispersion *= 0.985; 
                 const circleSize = 50 + dispersion;
                 cursorCircle.style.width = `${circleSize}px`;
                 cursorCircle.style.height = `${circleSize}px`;
@@ -560,7 +566,7 @@
                 }
                 if (wavePath) wavePath.setAttribute('d', d);
 
-                // МАТЕМАТИЧЕСКИЙ РАДАР (ПОВЫШЕННАЯ ТОЧНОСТЬ, Т.К. КАРТОЧКИ ДАЛЕКО)
+                // МАТЕМАТИЧЕСКИЙ РАДАР ДЛЯ РАДИУСА 800 (Погрешность 12 градусов)
                 let lookAngleY = ((-currentRotY % 360) + 360) % 360; 
                 let foundTarget = null;
                 nodes.forEach(node => {
@@ -568,7 +574,7 @@
                     if (targetAngle < 0) targetAngle += 360; 
                     let diff = Math.abs(lookAngleY - targetAngle);
                     if (diff > 180) diff = 360 - diff; 
-                    if (diff < 2 && Math.abs(currentRotX) < 10) foundTarget = node; // ОЧЕНЬ ТОЧНЫЙ ХИТРЕГ
+                    if (diff < 12 && Math.abs(currentRotX) < 15) foundTarget = node;
                 });
 
                 if (foundTarget !== activeTarget) {
@@ -591,11 +597,14 @@
             }
             renderLoop();
 
-            function printLog(text) {
+            function printLog(text, isHtml = false) {
                 if (gameContent.classList.contains('lvl-8')) return;
                 clearInterval(typeInterval); terminal.innerHTML = ''; let i = 0; isTyping = true;
                 typeInterval = setInterval(() => {
-                    if (i < text.length) { terminal.innerHTML += text[i] === '\n' ? '<br>' : text[i]; i++; } 
+                    if (i < text.length) { 
+                        terminal.innerHTML += text[i] === '\n' ? '<br>' : text[i]; 
+                        i++; 
+                    } 
                     else { clearInterval(typeInterval); isTyping = false; }
                 }, 10);
             }
@@ -604,7 +613,7 @@
             document.addEventListener('mousedown', () => {
                 if (gameState !== 'GAME' || gameContent.classList.contains('lvl-8')) return;
 
-                if (document.pointerLockElement !== document.body) {
+                if (!isPointerLocked) {
                     document.body.requestPointerLock();
                     return;
                 }
@@ -627,14 +636,15 @@
                         else if (vaultShots === 2) printLog(">> ВНИМАНИЕ! НЕ СТРЕЛЯЙТЕ СЮДА.\nЭТО ОПАСНАЯ ЗОНА. ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ.");
                         else if (vaultShots >= 3) {
                             gameContent.classList.add('lvl-8');
-                            // СТРОГО ТВОЙ ТЕКСТ С НОВЫМ ШРИФТОМ:
                             terminal.innerHTML = db.sys;
                             document.exitPointerLock();
                             clearInterval(typeInterval); isTyping = false;
                         }
                     } else {
-                        printLog(">> ПОПАДАНИЕ! БРОНЯ ПРОБИТА...\n" + db[id]);
+                        printLog(db[id]);
                         if (id === 'tg') navigator.clipboard.writeText('@rxksyan');
+                        if (id === 'tt') navigator.clipboard.writeText('https://www.tiktok.com/@rxksyan/video/7635338536497007893');
+                        if (id === 'ach') navigator.clipboard.writeText('https://www.tiktok.com/@rxksyan/video/7635031622034705672');
                     }
                 } else {
                     printLog(">> ПРОМАХ! ВЫСТРЕЛ В МОЛОКО. НАВЕДИТЕСЬ ТОЧНЕЕ.");
