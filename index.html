@@ -636,7 +636,7 @@
                         else if (vaultShots === 2) printLog(">> ВНИМАНИЕ! НЕ СТРЕЛЯЙТЕ СЮДА.\nЭТО ОПАСНАЯ ЗОНА. ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ.");
                         else if (vaultShots >= 3) {
                             gameContent.classList.add('lvl-8');
-                            terminal.innerHTML = db.sys;
+                            terminal.innerHTML = ">>> SYSTEM FAILURE!<br>>>> КРИТИЧЕСКАЯ ОШИБКА АППАРАТНОЙ ЧАСТИ.<br>>>> ВЫ ЛЕЗЕТЕ ТУДА, КУДА НЕ НАДО.<br>>>> ДОСТУП НАВСЕГДА ЗАБЛОКИРОВАН.";
                             document.exitPointerLock();
                             clearInterval(typeInterval); isTyping = false;
                         }
